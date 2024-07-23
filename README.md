@@ -11,7 +11,7 @@
 |3  | [Convert truthy/falsy to boolean(true/false)](#Convert-truthy-falsy-to-boolean)|
 |4  | [Repeat a string](#Repeat-a-string)|
 |5  | [Check how long an operation takes](#Check-how-long-an-operation-takes)|
-|6  | [Two ways to remove an item in a specific in an array](#Two-ways-to-remove-an-item-in-a-specific-in-an-array)|
+|6  | [Two ways to remove an item in a specific index in an array](#Two-ways-to-remove-an-item-in-a-specific-index-in-an-array)|
 |7  | [Did you know you can flat an array?](#Did-you-know-you-can-flat-an-array)|
 |8  | [Get unique values in an array](#Get-unique-values-in-an-array)|
 |9  | [Copy Text to Clipboard](#Copy-Text-to-Clipboard)|
@@ -54,6 +54,9 @@
 |46 | [get device orientation](#get-device-orientation)|
 |47 | [CONST vs LET vs VAR](#const-let-var)|
 |48 | [slice array with steps (like python)](#slice-array-with-steps-like-python)|
+|49 | [Shuffle Array](#shuffle-array)|
+|50 | [Find max number in array](#find-max-number-in-array)|
+|51 | [Most frequent element in an array](#most-frequent-element-in-an-array)|
 
 **[⬆ Back to Top](#table-of-contents)**
 ### How to generate a random number in a given range
@@ -162,12 +165,12 @@ console.log("this doSomething took " + (endTime - startTime) + " milliseconds.")
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
-### Two ways to remove an item in a specific in an array
+### Two ways to remove an item in a specific index in an array
 
 ```javascript
 // Mutating way
 const muatatedArray = ['a','b','c','d','e'];
-muatatedArray.splice(2,1)
+muatatedArray.splice(2, 1)
 console.log(muatatedArray) // ['a', 'b', 'd', 'e']
 
 // Non-mutating way
@@ -200,7 +203,7 @@ myArray.flat(infinity) // [2, 3, 4, 5, 7, 7, 8, 9, 1, 1];
 const numbers = [1, 1, 3, 2, 5, 3, 4, 7, 7, 7, 8];
 
 // Ex1
-const unieqNumbers = numbers.filter((v,i,a) => a.indexOf(v )=== i )
+const unieqNumbers = numbers.filter((v,i,a) => a.indexOf(v) === i )
 console.log(unieqNumbers) // [1, 3, 2, 5, 4, 7, 8]
 
 // Ex2
@@ -789,27 +792,26 @@ const reduceRightArray = arr.reduceRight((acc, current) => {
 **[⬆ Back to Top](#table-of-contents)**
 ### Abort Fetch
 
-```javascript
-
-
-// HTML
+```html
+<!-- HTML -->
 <button id="download">Download</button>
 <button id="abort">Abort</button>
 
-// JS
-let controller;
+<!-- JS -->
+<script type="text/javascript">
+  let controller;
 
-document.querySelector('#download').addEventListener('click', () => {
-  controller = new AbortController();
-  const signal = controller.signal;
-  fetch('https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4', {signal})
-    .then(() => console.log('done'));
-});
+  document.querySelector('#download').addEventListener('click', () => {
+    controller = new AbortController();
+    const signal = controller.signal;
+    fetch('https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4', {signal})
+      .then(() => console.log('done'));
+  });
 
-document.querySelector('#abort').addEventListener('click', function() {
-  controller.abort();
-});
-
+  document.querySelector('#abort').addEventListener('click', function() {
+    controller.abort();
+  });
+</script>
 ```
 
 
@@ -1010,7 +1012,7 @@ function getOrientation() {
 **[⬆ Back to Top](#table-of-contents)**
 ### slice array with steps (like python)
 
-```js
+```javascript
 
 Array.prototype.slice = function (start = 0, end = this.length, step = 1) {
   const result = [];
@@ -1039,4 +1041,41 @@ console.log(array.slice(1, 9, 2)); // [1, 3, 5, 7]
 
 console.log(array.slice(1, 9, -2)); // [7, 5, 3, 1]
 
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+### Shuffle Array
+
+```javascript
+// Three quick steps to shuffle an array in Javascript: Map to a random number, sort on that and map the object back! 
+const shuffleArray = anArray =>
+  anArray
+    .map(a => [Math.random(), a])
+    .sort((a, b) => a[0] - b[0])
+    .map(a => a[1]);
+
+console.log(shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+// [4, 6, 8, 7, 9, 10, 1, 2, 3, 5]
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+### Find max number in array
+
+```javascript
+Math.max.apply(null, [1, 2, 10, 3]) // 10
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+### Most frequent element in an array
+
+```javascript
+const mostFrequent = arr =>
+  Object.entries(
+    arr.reduce((a, v) => {
+      a[v] = a[v] ? a[v] + 1 : 1;
+      return a;
+    }, {})
+  ).reduce((a, v) => (v[1] >= a[1] ? v : a), [null, 0])[0];
+
+console.log(mostFrequent([1, 2, 4, 2, 5])); // 2
 ```
