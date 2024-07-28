@@ -1,3 +1,5 @@
+<img src="./Logo.png" align="right" />
+
 # JavaScript-snippets
 > Click :star:  if you like the project. Pull Request are highly appreciated. Follow us on [Facebook](https://www.facebook.com/snippetsJS)
 
@@ -9,7 +11,7 @@
 |3  | [Convert truthy/falsy to boolean(true/false)](#Convert-truthy-falsy-to-boolean)|
 |4  | [Repeat a string](#Repeat-a-string)|
 |5  | [Check how long an operation takes](#Check-how-long-an-operation-takes)|
-|6  | [Two ways to remove an item in a specific in an array](#Two-ways-to-remove-an-item-in-a-specific-in-an-array)|
+|6  | [Two ways to remove an item in a specific index in an array](#Two-ways-to-remove-an-item-in-a-specific-index-in-an-array)|
 |7  | [Did you know you can flat an array?](#Did-you-know-you-can-flat-an-array)|
 |8  | [Get unique values in an array](#Get-unique-values-in-an-array)|
 |9  | [Copy Text to Clipboard](#Copy-Text-to-Clipboard)|
@@ -51,6 +53,10 @@
 |45 | [structuredClone](#structuredClone)|
 |46 | [get device orientation](#get-device-orientation)|
 |47 | [CONST vs LET vs VAR](#const-let-var)|
+|48 | [slice array with steps (like python)](#slice-array-with-steps-like-python)|
+|49 | [Shuffle Array](#shuffle-array)|
+|50 | [Find max number in array](#find-max-number-in-array)|
+|51 | [Most frequent element in an array](#most-frequent-element-in-an-array)|
 
 **[⬆ Back to Top](#table-of-contents)**
 ### How to generate a random number in a given range
@@ -61,12 +67,12 @@ const getRandomNumber = (min, max) => Math.random() * (max - min) + min;
 
 getRandomNumber(2, 10)
 
- // Returns a random number(int) between min (inclusive) and max (inclusive)
+// Returns a random number(int) between min (inclusive) and max (inclusive)
 
 const getRandomNumberInclusive =(min, max)=> {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 getRandomNumberInclusive(2, 10);
@@ -80,35 +86,34 @@ const firstArr = [5, 2, 1];
 const secondArr = [1, 2, 3, 4, 5];
 
 const diff = [
-    ...secondArr.filter(x => !firstArr.includes(x)),					
-    ...firstArr.filter(x => !secondArr.includes(x))
+  ...secondArr.filter(x => !firstArr.includes(x)),					
+  ...firstArr.filter(x => !secondArr.includes(x))
 ];
-console.log('diff',diff) //[3,4]
+console.log('diff',diff) // [3, 4]
 
 
 function arrayDiff(a, b) {
-    return [
-        ...a.filter(x => b.indexOf(x) === -1),
-        ...b.filter(x => a.indexOf(x) === -1)
-    ]
+  return [
+    ...a.filter(x => b.indexOf(x) === -1),
+    ...b.filter(x => a.indexOf(x) === -1)
+  ]
 }
-console.log('arrayDiff',arrayDiff(firstArr, secondArr)) //[3,4]
+console.log('arrayDiff',arrayDiff(firstArr, secondArr)) // [3, 4]
 
 
 
 
 const difference = (a, b) => {
-    const setA = new Set(a);
-    const setB = new Set(b);
+  const setA = new Set(a);
+  const setB = new Set(b);
 
-    return [
-        ...a.filter(x => !setB.has(x)),
-        ...b.filter(x => !setA.has(x))
-
-    ]
+  return [
+    ...a.filter(x => !setB.has(x)),
+    ...b.filter(x => !setA.has(x))
+  ]
 };
 
-difference(firstArr, secondArr); //[3,4]
+difference(firstArr, secondArr); // [3, 4]
 console.log('difference',difference(firstArr, secondArr))
 ```
 
@@ -137,7 +142,7 @@ for(let i = 0 ; i < 6 ; i++){
 }
 //👽👽👽👽👽👽
 
-Array(6).join('👽')
+Array(6 + 1).join('👽')
 //👽👽👽👽👽👽
 
 
@@ -148,10 +153,10 @@ Array(6).join('👽')
 **[⬆ Back to Top](#table-of-contents)**
 ### Check how long an operation takes
 ```javascript
-//The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds.
-//performance.now() is relative to page load and more precise in orders of magnitude. 
-//Use cases include benchmarking and other cases where a high-resolution time is required 
-//such as media (gaming, audio, video, //etc.)
+// The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds.
+// performance.now() is relative to page load and more precise in orders of magnitude. 
+// Use cases include benchmarking and other cases where a high-resolution time is required 
+// such as media (gaming, audio, video, // etc.)
 
 var startTime = performance.now();
 doSomething();
@@ -160,18 +165,18 @@ console.log("this doSomething took " + (endTime - startTime) + " milliseconds.")
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
-### Two ways to remove an item in a specific in an array
+### Two ways to remove an item in a specific index in an array
 
 ```javascript
-//Mutating way
+// Mutating way
 const muatatedArray = ['a','b','c','d','e'];
-muatatedArray.splice(2,1)
-console.log(muatatedArray) //['a','b','d','e']
+muatatedArray.splice(2, 1)
+console.log(muatatedArray) // ['a', 'b', 'd', 'e']
 
-//Non-mutating way
+// Non-mutating way
 const nonMuatatedArray = ['a','b','c','d','e'];
 const newArray = nonMuatatedArray.filter((item, index) => !( index === 2 ));
-console.log(newArray) //['a','b','d','e']
+console.log(newArray) // ['a', 'b', 'd', 'e']
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
@@ -180,14 +185,14 @@ console.log(newArray) //['a','b','d','e']
 ```javascript
 const myArray = [2, 3, [4, 5],[7,7, [8, 9, [1, 1]]]];
 
-myArray.flat() // [2, 3, 4, 5 ,7,7, [8, 9, [1, 1]]]
+myArray.flat() // [2, 3, 4, 5, 7, 7, [8, 9, [1, 1]]]
 
-myArray.flat(1) // [2, 3, 4, 5 ,7,7, [8, 9, [1, 1]]]
+myArray.flat(1) // [2, 3, 4, 5, 7, 7, [8, 9, [1, 1]]]
 
-myArray.flat(2) // [2, 3, 4, 5 ,7,7, 8, 9, [1, 1]]
+myArray.flat(2) // [2, 3, 4, 5, 7, 7, 8, 9, [1, 1]]
 
-//if you dont know the depth of the array you can use infinity
-myArray.flat(infinity) // [2, 3, 4, 5 ,7,7, 8, 9, 1, 1];
+// if you dont know the depth of the array you can use infinity
+myArray.flat(infinity) // [2, 3, 4, 5, 7, 7, 8, 9, 1, 1];
 
 ```
 
@@ -195,23 +200,23 @@ myArray.flat(infinity) // [2, 3, 4, 5 ,7,7, 8, 9, 1, 1];
 ### Get unique values in an array
 
 ```javascript
-const numbers = [1,1,3,2,5,3,4,7,7,7,8];
+const numbers = [1, 1, 3, 2, 5, 3, 4, 7, 7, 7, 8];
 
-//Ex1
-const unieqNumbers = numbers.filter((v,i,a) => a.indexOf(v )=== i )
-console.log(unieqNumbers) //[1,3,2,5,4,7,8]
+// Ex1
+const unieqNumbers = numbers.filter((v,i,a) => a.indexOf(v) === i )
+console.log(unieqNumbers) // [1, 3, 2, 5, 4, 7, 8]
 
-//Ex2
+// Ex2
 const unieqNumbers2 = Array.from(new Set(numbers))
-console.log(unieqNumbers2) //[1,3,2,5,4,7,8]
+console.log(unieqNumbers2) // [1, 3, 2, 5, 4, 7, 8]
 
-//Ex3
+// Ex3
 const unieqNumbers3 = [...new Set(numbers)]
-console.log(unieqNumbers3) //[1,3,2,5,4,7,8]
+console.log(unieqNumbers3) // [1, 3, 2, 5, 4, 7, 8]
 
-//EX4 lodash
+// EX4 lodash
 const unieqNumbers4 = _.uniq(numbers)
-console.log(unieqNumbers4) //[1,3,2,5,4,7,8]
+console.log(unieqNumbers4) // [1, 3, 2, 5, 4, 7, 8]
 
 ```
 
@@ -225,11 +230,10 @@ function copyToClipboard() {
   const copyText = document.getElementById("myInput");
   copyText.select();
   document.execCommand("copy");
-  
 }
-//new API
+// new API
 function copyToClipboard(){
- navigator.clipboard.writeText(document.querySelector('#myInput').value)
+  navigator.clipboard.writeText(document.querySelector('#myInput').value)
 }
 
 ```
@@ -240,16 +244,16 @@ function copyToClipboard(){
 
 ```javascript
 const user = {
- id: 459,
- name: 'JS snippets',
- age:29,
- education:{
-  degree: 'Masters'
- }
+  id: 459,
+  name: 'JS snippets',
+  age:29,
+  education:{
+    degree: 'Masters'
+  }
 }
 
 const { education : { degree } } = user;
-console.log(degree) //Masters
+console.log(degree) // Masters
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
@@ -257,7 +261,7 @@ console.log(degree) //Masters
 
 
 ```javascript
-//The URLSearchParams interface defines utility methods to work with the query string of a URL.
+// The URLSearchParams interface defines utility methods to work with the query string of a URL.
 
 const urlParams = new URLSearchParams("?post=1234&action=edit");
 
@@ -275,23 +279,23 @@ console.log(urlParams.append('active', '1')); // "?post=1234&action=edit&active=
 ```javascript
 const myFruits = ['Apple','Orange','Mango','Banana','Apple','Apple','Mango']
 
-//first option
+// first option
 const countMyFruits = myFruits.reduce((countFruits,fruit) => {
   countFruits[fruit] = ( countFruits[fruit] || 0 ) +1;
   return countFruits
- },{} )
- console.log(countMyFruits)
- // { Apple:3, Banana:1, Mango:2, Orange:1 }
- 
- //seconf option
- const fruitsCounter = {};
- 
- for( const fruit of myFruits ){
-   fruitsCounter[fruit] = fruitsCounter[fruit] ? fruitsCounter[fruit]+1 :1;
- }
+}, {})
+console.log(countMyFruits)
+// { Apple:3, Banana:1, Mango:2, Orange:1 }
+
+// seconf option
+const fruitsCounter = {};
+
+for( const fruit of myFruits ){
+  fruitsCounter[fruit] = fruitsCounter[fruit] ? fruitsCounter[fruit]+1 :1;
+}
   
- console.log(fruitsCounter)
- // { Apple:3, Banana:1, Mango:2, Orange:1 }
+console.log(fruitsCounter)
+// { Apple:3, Banana:1, Mango:2, Orange:1 }
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
@@ -300,7 +304,7 @@ const countMyFruits = myFruits.reduce((countFruits,fruit) => {
 
 ```javascript
 
-//There are cases where you want the destructured variable to have a different name than the property name
+// There are cases where you want the destructured variable to have a different name than the property name
 
 const obj = { 
   name: "JSsnippets"													
@@ -310,7 +314,7 @@ const obj = {
 // Grabs obj.name as { pageName }
 const { name: pageName } = obj;
 
-//log our alias
+// log our alias
 console.log(pageName) // JSsnippets
 ```
 
@@ -351,7 +355,7 @@ const frozenObject = Object.freeze(obj);
 
 frozenObject.name = 'weLoveJS'; // Uncaught TypeError
 
-//Although, we still can change a property’s value if it’s an object:
+// Although, we still can change a property’s value if it’s an object:
 
 frozenObject.address.street = 'React'; // no error, new value is set
 
@@ -359,8 +363,8 @@ frozenObject.address.street = 'React'; // no error, new value is set
 delete frozenObject.name // Cannot delete property 'name' of #<Object>
 
 
-//We can check if an object is frozen by using
-Object.isFrozen(obj) //true
+// We can check if an object is frozen by using
+Object.isFrozen(obj) // true
 
 ```
 
@@ -374,14 +378,14 @@ const obj = {
   age:29,
 };
 
-//Object.entries() method is used to return an array consisting of enumerable property 
+// Object.entries() method is used to return an array consisting of enumerable property 
 //[key, value] pairs of the object which are passed as the parameter.
 
 for(let [key,value] of Object.entries(obj)){
-   console.log(`${key}: ${value}`)
+  console.log(`${key}: ${value}`)
 }
 
-//expected output:
+// expected output:
 // "name: Jssnippets"
 // "age: 29"
 // order is not guaranteed
@@ -396,7 +400,7 @@ window.oncontextmenu = () => {
 	console.log('right click');
 	return false // cancel default menu
 }
-//or
+// or
 
 window.addEventListener('contextmenu', ()=>{
 	console.log('right click');
@@ -408,14 +412,14 @@ window.addEventListener('contextmenu', ()=>{
 ###  In HTML5, you can tell the browser when to run your JavaScript code
 ```javascript
 
-//Without async or defer, browser will run your script immediately, before rendering the elements that's below your script tag.
+// Without async or defer, browser will run your script immediately, before rendering the elements that's below your script tag.
 <script src="myscript.js"></script>
 
-//With async (asynchronous), browser will continue to load the HTML page and render it while the browser load and execute the script at the same time.
-//Async is more useful when you really don't care when the script loads and nothing else that is user dependent depends upon that script loading.(for scripts likes Google analytics)
+// With async (asynchronous), browser will continue to load the HTML page and render it while the browser load and execute the script at the same time.
+// Async is more useful when you really don't care when the script loads and nothing else that is user dependent depends upon that script loading.(for scripts likes Google analytics)
 <script async src="myscript.js"></script>
 
-//With defer, browser will run your script when the page finished parsing. (not necessary finishing downloading all image files. 
+// With defer, browser will run your script when the page finished parsing. (not necessary finishing downloading all image files. 
 <script defer src="myscript.js"></script>
 ```
 
@@ -423,7 +427,7 @@ window.addEventListener('contextmenu', ()=>{
 ###   Nullish coalescing operator
 ```javascript
 
-// an equality check against nullary values (e.g. null or undefined). Whenever the expression to the left of the ?? operator evaluates to either //undefined or null, the value defined to the right will be returned.
+// an equality check against nullary values (e.g. null or undefined). Whenever the expression to the left of the ?? operator evaluates to either // undefined or null, the value defined to the right will be returned.
 
 const foo = undefined ?? 'default string';
 console.log(foo);
@@ -444,36 +448,38 @@ const carColor = car.name.color
 console.log(carColor);
 // error- "Uncaught TypeError: Cannot read property 'carColor' of undefined		
 
-//In JavaScript, you can first check if an object exists, and then try to get one of its properties, like this:
+// In JavaScript, you can first check if an object exists, and then try to get one of its properties, like this:
 const carColor = car && car.name && car.name.color;
 console.log(carColor);
-//undefined- no error
+// undefined- no error
 
 
-//Now this new optional chaining operator will let us be even more fancy:
+// Now this new optional chaining operator will let us be even more fancy:
 
 const newCarColor = car?.name?.color;
 console.log(newCarColor) 
-//undefined- no error
+// undefined- no error
 					
-//You can use this syntax today using @babel/plugin-proposal-optional-chaining
+// You can use this syntax today using @babel/plugin-proposal-optional-chaining
 ```
 
 **[⬆ Back to Top](#table-of-contents)**
 ###  globalThis
 ```javascript
-Accessing the global property in JavaScript has always posed some difficulty. This is because 
-different platforms have different ways to access it.
+/* 
+  Accessing the global property in JavaScript has always posed some difficulty. This is because
+  different platforms have different ways to access it.
 
-Client-side JavaScript uses window or self
+  Client-side JavaScript uses window or self
 
-Node.js uses global
+  Node.js uses global
 
-Web workers use self
+  Web workers use self
 
-The globalThis property provides a standard way of accessing the global 'this' value across environments. you can access the global object in a consistent manner without having to know which environment the code is being run in. 
+  The globalThis property provides a standard way of accessing the global 'this' value across environments. you can access the global object in a consistent manner without having to know which environment the code is being run in.
+*/
 
-console.log(globalThis) //get the global this depends on your environment
+console.log(globalThis) // get the global this depends on your environment
 
 ```
 
@@ -482,12 +488,12 @@ console.log(globalThis) //get the global this depends on your environment
 #  The second argument of JSON.stringify lets you cherry-pick 🍒 keys to serialize.
 ```javascript
 const user = {
- id: 459,
- name: 'JS snippets',
- age:29,
- education:{
-  degree: 'Masters'
- }
+  id: 459,
+  name: 'JS snippets',
+  age:29,
+  education:{
+    degree: 'Masters'
+  }
 }
 
 JSON.stringify(user,[name,age], 2)						
@@ -499,8 +505,6 @@ returns
   "name": "JS snippets",
   "age": 29
 }
-
-
 */
 
 ```
@@ -543,22 +547,22 @@ span.addEventListener("click", function() {
 
 ```javascript
 function isJson(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-      //the json is  not ok
-        return false;
-    }
-    //the json is ok
-    return true;									
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    // the json is  not ok
+    return false;
+  }
+  // the json is ok
+  return true;									
 }
 ```
 **[⬆ Back to Top](#table-of-contents)**
 ### getBoundingClientRect
 
 ```javascript
-//getBoundingClientRect provides you with important pieces of data about an
-//HTML element’s size and positioning.
+// getBoundingClientRect provides you with important pieces of data about an
+// HTML element’s size and positioning.
 
 const bodyBounderies = document.body.getBoundingClientRect();
 // =>  {
@@ -619,9 +623,9 @@ see our codepen: https://codepen.io/JSsnippets/pen/gOapPzq
 const video =  document.getElementById("my-video");
 
 const onVisibilitychange =()=>{
-   return document.hidden 
-     ? video.pause() 
-     : video.play();
+  return document.hidden 
+    ? video.pause() 
+    : video.play();
 } 
 
 document.addEventListener("visibilitychange", onVisibilitychange)
@@ -645,7 +649,7 @@ class Students {
   }
 
   getPrivateMessage() {
-      return this.#privateMethod();
+    return this.#privateMethod();
   }
 }
 
@@ -678,13 +682,13 @@ The void operator evaluates the given expression and then returns undefined.
 ```javascript
 
 
-void 0;  		//returns undefined
-void (0); 		//returns undefined
-void {}; 		//returns undefined
-void "JSsnippets; 	//returns undefined
-void (0); 		//returns undefined
-void (2 == '2'); 	//returns undefined
-void anyfunction(); 	//returns undefined
+void 0;  		// returns undefined
+void (0); 		// returns undefined
+void {}; 		// returns undefined
+void "JSsnippets; 	// returns undefined
+void (0); 		// returns undefined
+void (2 == '2'); 	// returns undefined
+void anyfunction(); 	// returns undefined
 
 ```
 
@@ -729,20 +733,20 @@ Expanding on the default parameter technique, we can mark a parameter as mandato
 
 ```javascript
 const isRequired = () => {
-    throw new Error( 'This is a mandatory parameter.' );
+  throw new Error( 'This is a mandatory parameter.' );
 }
 
 
 const getPage = ( pageName = 'Jssnippets', url = isRequired() ) => {
-    return `${pageName} ${url}`;
+  return `${pageName} ${url}`;
 }
 
 console.log(getPage());
 
-//In the above code, url will be undefined and that will try to set the default value for it which is the isRequired() function. It will throw an error as,
+// In the above code, url will be undefined and that will try to set the default value for it which is the isRequired() function. It will throw an error as,
 
-//Uncaught error: This is a mandatory parameter.
-//at isRequired
+// Uncaught error: This is a mandatory parameter.
+// at isRequired
 
 ```
 
@@ -757,7 +761,7 @@ console.log(getPage());
 <input type="number" id="JSsnippets" onkeyup="checkMyType(event)" />
 
 function checkMyType(event){
-  
+
   console.log(typeof event.target.value) // string
   console.log(typeof event.target.valueAsNumber ) // number
 
@@ -773,14 +777,14 @@ function checkMyType(event){
 const arr = ["a", "b", "c", "d", "e"]
 
 const reduceArray = arr.reduce((acc, current) => {
-    return acc + current
+  return acc + current
 }, "")
-//return abcde
+// return abcde
 
 const reduceRightArray = arr.reduceRight((acc, current) => {
-    return acc + current
+  return acc + current
 }, "")
-//return edcba
+// return edcba
 
 ```
 
@@ -788,27 +792,26 @@ const reduceRightArray = arr.reduceRight((acc, current) => {
 **[⬆ Back to Top](#table-of-contents)**
 ### Abort Fetch
 
-```javascript
-
-
-//HTML
+```html
+<!-- HTML -->
 <button id="download">Download</button>
 <button id="abort">Abort</button>
 
-//JS
-let controller;
+<!-- JS -->
+<script type="text/javascript">
+  let controller;
 
-document.querySelector('#download').addEventListener('click', () => {
-  controller = new AbortController();
-  const signal = controller.signal;
-  fetch('https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4', {signal})
-    .then(() => console.log('done'));
-});
+  document.querySelector('#download').addEventListener('click', () => {
+    controller = new AbortController();
+    const signal = controller.signal;
+    fetch('https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4', {signal})
+      .then(() => console.log('done'));
+  });
 
-document.querySelector('#abort').addEventListener('click', function() {
-  controller.abort();
-});
-
+  document.querySelector('#abort').addEventListener('click', function() {
+    controller.abort();
+  });
+</script>
 ```
 
 
@@ -853,7 +856,7 @@ const newState = state.map((obj) =>
 
 100_000_000 === 100000000 // true
 
-300_000 === 300000 //true
+300_000 === 300000 // true
 
 ```
 
@@ -871,7 +874,7 @@ Calling this method on an empty array will return true for any condition!
 
 const arr = []
 const result = arr.every(x=> x==5)
-console.log(result) //true
+console.log(result) // true
 
 ```
 
@@ -886,10 +889,10 @@ console.log(result) //true
 ```javascript
 
 const JSarr = [
-    ['name', 'JSsnippets'],
-    ['address', 'worldwide'],
-    ['year', '2018'],
-    ['followers', '15000']
+  ['name', 'JSsnippets'],
+  ['address', 'worldwide'],
+  ['year', '2018'],
+  ['followers', '15000']
 
 ];
 
@@ -989,8 +992,8 @@ Browsers expose a global variable named screen, which we’ll use to access the 
 ```javascript
 
 function getOrientation() {  
-    const isPortrait = screen.orientation.type.startswith('portrait')  
-    return isPortrait ? 'portrait' : 'landscape'
+  const isPortrait = screen.orientation.type.startswith('portrait')  
+  return isPortrait ? 'portrait' : 'landscape'
 }
 
 ```
@@ -1000,8 +1003,79 @@ function getOrientation() {
 
 |                        | const | Let | Var |
 |------------------------|-------|-----|-----|
-| Can be Reaasigned?     | :x:     | :white_check_mark:   |:white_check_mark:   |
-| Cab be Redeclared?     | :x:    | :x:  | :white_check_mark:  |
+| Can be Reassigned?     | :x:     | :white_check_mark:   |:white_check_mark:   |
+| Can be Redeclared?     | :x:    | :x:  | :white_check_mark:  |
 | Block Scope            | :white_check_mark:    |:white_check_mark:   | :x:   |
 | Function Scope         | :white_check_mark:     | :white_check_mark:   | :white_check_mark:   |
 | Stored in Global Scope | :x:     | :x:   | :white_check_mark:   |
+
+**[⬆ Back to Top](#table-of-contents)**
+### slice array with steps (like python)
+
+```javascript
+
+Array.prototype.slice = function (start = 0, end = this.length, step = 1) {
+  const result = [];
+  const stepCount = step < 0 ? step * -1 : step;
+  const endPoint = end > this.length ? this.length : end;
+
+  for (let i = start; i < endPoint; i += stepCount) {
+    result.push(this[i]);
+  }
+
+  if (step < 0) {
+    result.reverse();
+  }
+
+  return result;
+};
+
+const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+
+console.log(array.slice(1, 9)); // [1, 2, 3, 4, 5, 6, 7, 8]
+
+console.log(array.slice(1)); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+console.log(array.slice(1, 9, 2)); // [1, 3, 5, 7]
+
+console.log(array.slice(1, 9, -2)); // [7, 5, 3, 1]
+
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+### Shuffle Array
+
+```javascript
+// Three quick steps to shuffle an array in Javascript: Map to a random number, sort on that and map the object back! 
+const shuffleArray = anArray =>
+  anArray
+    .map(a => [Math.random(), a])
+    .sort((a, b) => a[0] - b[0])
+    .map(a => a[1]);
+
+console.log(shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+// [4, 6, 8, 7, 9, 10, 1, 2, 3, 5]
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+### Find max number in array
+
+```javascript
+Math.max.apply(null, [1, 2, 10, 3]) // 10
+```
+
+**[⬆ Back to Top](#table-of-contents)**
+### Most frequent element in an array
+
+```javascript
+const mostFrequent = arr =>
+  Object.entries(
+    arr.reduce((a, v) => {
+      a[v] = a[v] ? a[v] + 1 : 1;
+      return a;
+    }, {})
+  ).reduce((a, v) => (v[1] >= a[1] ? v : a), [null, 0])[0];
+
+console.log(mostFrequent([1, 2, 4, 2, 5])); // 2
+```
